@@ -172,6 +172,13 @@ export default function App() {
   const [scrollY, setScrollY] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const accent = "#7a9e7e";
   const accentLight = "#eaf2eb";
@@ -206,7 +213,7 @@ export default function App() {
     a: {
       color: "#4a7a50;"
     },
-    logo: { fontFamily: "Georgia, serif", fontSize: "1.15rem", fontWeight: 400, letterSpacing: "0.02em", color: "#1a1a1a", cursor: "pointer" },
+    logo: { fontFamily: "Georgia, serif", fontSize: "1.15rem", fontWeight: 400, letterSpacing: "0.02em", color: "#1a1a1a", cursor: "pointer", whiteSpace: "nowrap" },
     navLinks: { display: "flex", gap: "2rem", listStyle: "none", margin: 0, padding: 0 },
     navLink: { fontSize: "0.85rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", color: "#555", transition: "color 0.2s" },
     hero: {
@@ -240,7 +247,7 @@ export default function App() {
     projectDesc: { fontSize: "0.88rem", color: "#666", lineHeight: 1.7, marginBottom: "1.25rem" },
     projectTags: { display: "flex", flexWrap: "wrap", gap: "0.4rem" },
     projectTag: { background: "#eee", color: "#666", borderRadius: "100px", padding: "0.25rem 0.75rem", fontSize: "0.75rem" },
-    expItem: { display: "grid", gridTemplateColumns: "180px 1fr", gap: "2rem", padding: "2rem 0", borderTop: "1px solid #ebe8e8" },
+    expItem: { display: "grid", gridTemplateColumns: isMobile ? "1fr" : "180px 1fr", gap: isMobile ? "0.25rem" : "2rem", padding: "2rem 0", borderTop: "1px solid #ebe8e8" },
     expPeriod: { fontSize: "0.8rem", color: "#aaa", letterSpacing: "0.05em", paddingTop: "0.2rem" },
     expRole: { fontFamily: "Georgia, serif", fontSize: "1.15rem", fontWeight: 400, marginBottom: "0.15rem" },
     expCompany: { fontSize: "0.85rem", color: accent, marginBottom: "0.5rem", fontWeight: 500 },
@@ -274,22 +281,28 @@ export default function App() {
       <div style={{ position: "fixed", top: 0, left: 0, zIndex: 101, height: 2, background: accent, width: `${scrollProgress}%`, transition: "width 0.1s linear", pointerEvents: "none" }} />
       <nav style={styles.nav}>
         <div style={styles.logo} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>Loren Love.</div>
-        <ul style={styles.navLinks}>
-          {NAV.map(n => (
-            <li key={n} style={styles.navLink} onClick={() => scrollTo(n)}
-              onMouseEnter={e => e.target.style.color = accent}
-              onMouseLeave={e => e.target.style.color = "#555"}>
-              {n}
-            </li>
-          ))}
-        </ul>
+        {!isMobile && (
+          <ul style={styles.navLinks}>
+            {NAV.map(n => (
+              <li key={n} style={styles.navLink} onClick={() => scrollTo(n)}
+                onMouseEnter={e => e.target.style.color = accent}
+                onMouseLeave={e => e.target.style.color = "#555"}>
+                {n}
+              </li>
+            ))}
+          </ul>
+        )}
       </nav>
 
       <section style={styles.hero}>
-        <div style={styles.decoRing}>
-          <div className="hero-blob" style={{ width: "100%", height: "100%", background: "#e4ece4", borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }} />
-        </div>
-        <img src={`${process.env.PUBLIC_URL}/avatar.png`} alt="" aria-hidden="true" style={styles.deco} />
+        {!isMobile && (
+          <>
+            <div style={styles.decoRing}>
+              <div className="hero-blob" style={{ width: "100%", height: "100%", background: "#e4ece4", borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }} />
+            </div>
+            <img src={`${process.env.PUBLIC_URL}/avatar.png`} alt="" aria-hidden="true" style={styles.deco} />
+          </>
+        )}
         <div style={{ position: "relative" }}>
           <div style={styles.heroEyebrow}>
             <span style={{ width: 24, height: 1.5, background: accent, display: "inline-block" }} />
@@ -401,7 +414,7 @@ export default function App() {
         <div>
           {EXPERIENCE.map((e, i) => (
             <FadeIn key={e.company + e.role} delay={i * 0.1}>
-              <div style={styles.expItem}>
+              <div className="exp-item" style={styles.expItem}>
                 <div style={styles.expPeriod}>{e.period}</div>
                 <div>
                   <div style={styles.expRole}>{e.role}</div>

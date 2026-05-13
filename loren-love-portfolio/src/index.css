@@ -28,3 +28,19 @@ code {
 .hero-blob {
   animation: blob 8s ease-in-out infinite;
 }
+
+@media (max-width: 768px) {
+  .hero-avatar,
+  .hero-blob-wrapper {
+    display: none;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .exp-item {
+    grid-template-columns: 1fr !important;
+    gap: 0.25rem !important;
+  }
+}

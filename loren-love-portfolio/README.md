@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Loren Love — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+My personal portfolio site, live at [lorenlove.com](https://lorenlove.com).
 
-## Available Scripts
+I built this from scratch as a way to showcase my work and have a little fun with animation and design. It's a single-page React app styled entirely with Tailwind CSS — no UI library, no router, just clean utility classes and smooth-scroll navigation between sections.
 
-In the project directory, you can run:
+## What I used
 
-### `npm start`
+- **React 18** for the UI
+- **Tailwind CSS v3** for all the styling — custom sage green palette, responsive layouts, hover states
+- **GitHub Pages** to host it, with a custom domain locked in via `CNAME`
+- **Google Analytics (GA4)** to track visits — and yes, I built an [n8n workflow](https://github.com/lfouts/analytics-pipeline) to pipe that data into a live Grafana dashboard
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Things I'm happy with
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- The terminal loader on first visit (`npm run portfolio` — types itself out, then fades away)
+- The animated blob behind the hero avatar that morphs shape on a loop
+- Skill tags that stagger in one by one when you scroll to the About section
+- Project stat badges that count up when the cards come into view
+- A scroll progress bar at the top of the page
+- Fully responsive — the avatar and nav hide gracefully on mobile
 
-### `npm test`
+## Running it locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Everything runs from the `loren-love-portfolio/` folder:
 
-### `npm run build`
+```bash
+npm start          # Dev server at localhost:3000
+npm run build      # Production build
+npm run deploy     # Build and push live to GitHub Pages
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tailwind setup note
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Tailwind v3 is wired in via `postcss.config.js` alongside CRA's build. Custom colours (sage green shades, cream background) are defined in `tailwind.config.js`. The only CSS file is `src/index.css` — it holds the Tailwind directives and a couple of custom keyframe animations for the blob and cursor blink effects.

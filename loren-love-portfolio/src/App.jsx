@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 
 const NAV = ["About", "Projects", "Experience", "Contact"];
 
-const SKILLS = ["Angular", "TypeScript", "n8n", "Elasticsearch", "RxJS", "NgRx", "React", "Node.js", "Jest", "Cypress", "Grafana", "REST APIs", "Auth0", "CI/CD"];
+const SKILLS = ["React", "React Native", "Angular", "TypeScript", "n8n", "Elasticsearch", "RxJS", "NgRx", "Node.js", "Expo", "Supabase", "Jest", "Cypress", "Grafana", "REST APIs", "Auth0", "CI/CD", "Python", "Rust"];
 
-const PROJECTS = [
+const PROFESSIONAL_PROJECTS = [
   {
     title: "Modular UI Architecture",
     company: "NetFoundry — Cloud-native Networking",
@@ -33,23 +33,40 @@ const PROJECTS = [
     tags: ["Auth0", "Node.js", "React", "New Relic"],
     stat: "~90% app coverage",
   },
+];
+
+const PERSONAL_PROJECTS = [
   {
-    title: "Live Website Analytics Pipeline",
-    company: "Personal Project",
-    desc: "Automated data pipeline that pulls website analytics from Google Analytics daily via n8n, stores time-series data in InfluxDB, and visualises sessions, pageviews, visitor locations and top cities in a live Grafana dashboard.",
-    tags: ["Google Analytics", "n8n", "InfluxDB", "Grafana"],
-    stat: "Live",
-    flow: ["Google Analytics", "n8n", "InfluxDB", "Grafana"],
-    link: "https://lorenlove.grafana.net/public-dashboards/ea33555320884f6f8679b42354551839",
+    title: "Pour'd",
+    company: "React Native Mobile App",
+    desc: "Cross-platform mobile app built with React Native and Expo, backed by Supabase for database and auth — TypeScript throughout, with NativeWind bringing Tailwind-style native styling to the component layer.",
+    tags: ["React Native", "TypeScript", "Expo", "Supabase", "NativeWind"],
+    stat: "Open source",
+    github: "https://github.com/lfouts/pourd",
   },
   {
-    title: "n8n Analytics Workflow",
-    company: "Personal Project",
-    desc: "Automated n8n workflow that fetches daily website analytics from the Google Analytics Data API and writes time-series session and pageview data into InfluxDB — the data backbone behind the live Grafana dashboard.",
-    tags: ["n8n", "Google Analytics API", "InfluxDB", "REST APIs"],
+    title: "This Portfolio",
+    company: "React Web App",
+    desc: "Designed and built from scratch in React — custom scroll-animation system using IntersectionObserver, a terminal-style loading screen, fluid typography with clamp(), and zero third-party component libraries.",
+    tags: ["React", "JavaScript", "Tailwind CSS", "GitHub Pages"],
+    stat: "React app",
+    github: "https://github.com/lfouts/lfouts.github.io",
+  },
+  {
+    title: "MCP Agent",
+    company: "Python · AI Tooling",
+    desc: "Built a custom Model Context Protocol agent in Python — exploring how to extend AI assistants with purpose-built tools and structured context, hands-on with the emerging MCP standard.",
+    tags: ["Python", "MCP", "AI Tooling"],
     stat: "Open source",
-    flow: ["Google Analytics API", "n8n", "InfluxDB"],
-    github: "https://github.com/lfouts/analytics-pipeline",
+    github: "https://github.com/lfouts/mcp-learning",
+  },
+  {
+    title: "Learning Rust",
+    company: "Systems Programming",
+    desc: "An ongoing project working through Rust concepts — ownership, borrowing, lifetimes, and systems-level thinking. A deliberate investment in a language that's reshaping how performance-critical software gets written.",
+    tags: ["Rust"],
+    stat: "In progress",
+    github: "https://github.com/lfouts/Project_Rust",
   },
 ];
 
@@ -117,6 +134,50 @@ function StatDisplay({ stat }) {
 
   if (!match) return <span ref={ref}>{stat}</span>;
   return <span ref={ref}>{match[1]}{visible ? count : 0}{match[3]}</span>;
+}
+
+function ProjectCard({ p, i }) {
+  return (
+    <FadeIn delay={i * 0.1}>
+      <div className="group bg-[#f5f3f0] hover:bg-white border border-transparent hover:border-sage rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:shadow-[0_8px_32px_rgba(122,158,126,0.12)] hover:-translate-y-1 h-full flex flex-col">
+        <div className="mb-3">
+          <span className="text-[0.78rem] font-semibold text-sage bg-sage-light rounded-full px-3 py-0.5 inline-block">
+            <StatDisplay stat={p.stat} />
+          </span>
+        </div>
+        <div className="font-serif text-[1.35rem] font-normal mb-2">{p.title}</div>
+        <div className="text-[0.75rem] text-[#aaa] mb-2 tracking-[0.04em]">{p.company}</div>
+        <div className="text-[0.88rem] text-[#666] leading-relaxed mb-5 flex-1">{p.desc}</div>
+        {p.flow && (
+          <div className="flex items-center flex-wrap gap-1.5 mb-5">
+            {p.flow.map((step, si) => (
+              <span key={step} className="flex items-center gap-1.5">
+                <span className="bg-sage-light text-sage-dark rounded-full px-3 py-0.5 text-[0.75rem] font-medium whitespace-nowrap">{step}</span>
+                {si < p.flow.length - 1 && <span className="text-sage text-[0.75rem]">→</span>}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="flex flex-wrap gap-1.5">
+          {p.tags.map(t => (
+            <span key={t} className="bg-[#eee] text-[#666] rounded-full px-3 py-0.5 text-[0.75rem]">{t}</span>
+          ))}
+        </div>
+        {p.link && (
+          <a href={p.link} target="_blank" rel="noopener noreferrer"
+            className="inline-block mt-5 bg-sage text-white rounded-full px-5 py-2 text-[0.82rem] no-underline tracking-wide hover:opacity-85 transition-opacity">
+            View Live Dashboard →
+          </a>
+        )}
+        {p.github && (
+          <a href={p.github} target="_blank" rel="noopener noreferrer"
+            className="inline-block mt-5 bg-transparent text-sage border border-sage rounded-full px-5 py-2 text-[0.82rem] no-underline tracking-wide hover:opacity-75 transition-opacity">
+            View on GitHub →
+          </a>
+        )}
+      </div>
+    </FadeIn>
+  );
 }
 
 function TerminalLoader({ onDone }) {
@@ -282,47 +343,24 @@ export default function App() {
           <h2 className="font-serif text-section font-normal mb-4">Work I'm proud of.</h2>
           <div className="w-10 h-px bg-sage mb-12" />
         </FadeIn>
+
+        {/* Professional */}
+        <FadeIn>
+          <div className="text-[0.75rem] tracking-[0.15em] uppercase text-[#aaa] mb-6">Professional</div>
+        </FadeIn>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {PROFESSIONAL_PROJECTS.map((p, i) => (
+            <ProjectCard key={p.title} p={p} i={i} />
+          ))}
+        </div>
+
+        {/* Personal */}
+        <FadeIn>
+          <div className="text-[0.75rem] tracking-[0.15em] uppercase text-[#aaa] mb-6">Personal</div>
+        </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map((p, i) => (
-            <FadeIn key={p.title} delay={i * 0.1}>
-              <div className="group bg-[#f5f3f0] hover:bg-white border border-transparent hover:border-sage rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:shadow-[0_8px_32px_rgba(122,158,126,0.12)] hover:-translate-y-1 h-full flex flex-col">
-                <div className="mb-3">
-                  <span className="text-[0.78rem] font-semibold text-sage bg-sage-light rounded-full px-3 py-0.5 inline-block">
-                    <StatDisplay stat={p.stat} />
-                  </span>
-                </div>
-                <div className="font-serif text-[1.35rem] font-normal mb-2">{p.title}</div>
-                <div className="text-[0.75rem] text-[#aaa] mb-2 tracking-[0.04em]">{p.company}</div>
-                <div className="text-[0.88rem] text-[#666] leading-relaxed mb-5 flex-1">{p.desc}</div>
-                {p.flow && (
-                  <div className="flex items-center flex-wrap gap-1.5 mb-5">
-                    {p.flow.map((step, si) => (
-                      <span key={step} className="flex items-center gap-1.5">
-                        <span className="bg-sage-light text-sage-dark rounded-full px-3 py-0.5 text-[0.75rem] font-medium whitespace-nowrap">{step}</span>
-                        {si < p.flow.length - 1 && <span className="text-sage text-[0.75rem]">→</span>}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <div className="flex flex-wrap gap-1.5">
-                  {p.tags.map(t => (
-                    <span key={t} className="bg-[#eee] text-[#666] rounded-full px-3 py-0.5 text-[0.75rem]">{t}</span>
-                  ))}
-                </div>
-                {p.link && (
-                  <a href={p.link} target="_blank" rel="noopener noreferrer"
-                    className="inline-block mt-5 bg-sage text-white rounded-full px-5 py-2 text-[0.82rem] no-underline tracking-wide hover:opacity-85 transition-opacity">
-                    View Live Dashboard →
-                  </a>
-                )}
-                {p.github && (
-                  <a href={p.github} target="_blank" rel="noopener noreferrer"
-                    className="inline-block mt-5 bg-transparent text-sage border border-sage rounded-full px-5 py-2 text-[0.82rem] no-underline tracking-wide hover:opacity-75 transition-opacity">
-                    View on GitHub →
-                  </a>
-                )}
-              </div>
-            </FadeIn>
+          {PERSONAL_PROJECTS.map((p, i) => (
+            <ProjectCard key={p.title} p={p} i={i} />
           ))}
         </div>
       </section>

@@ -39,8 +39,8 @@ const PERSONAL_PROJECTS = [
   {
     title: "Pour'd",
     company: "React Native Mobile App",
-    desc: "Cross-platform mobile app built with React Native and Expo, backed by Supabase for database and auth — TypeScript throughout, with NativeWind bringing Tailwind-style native styling to the component layer.",
-    tags: ["React Native", "TypeScript", "Expo", "Supabase", "NativeWind"],
+    desc: "Social wine check-in app — log what you're drinking, rate it, and see what friends are pouring. React Native and Expo on the front end, a Node.js API built with Hono over Postgres and Drizzle behind it, with Meilisearch powering typo-tolerant search across a 300,000+ wine catalog.",
+    tags: ["React Native", "TypeScript", "Expo", "Node.js", "Hono", "Postgres", "Meilisearch"],
     stat: "Open source",
     github: "https://github.com/lfouts/pourd",
   },
